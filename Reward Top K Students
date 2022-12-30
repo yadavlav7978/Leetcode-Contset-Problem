@@ -1,0 +1,73 @@
+    bool cmp(pair<int,int>a,pair<int,int>b){
+        
+       if(a.second==b.second)return a.first<b.first;
+        
+         return a.second>b.second;
+         
+    }
+
+
+class Solution {
+public:
+ 
+    vector<int> topStudents(vector<string>& p_f, vector<string>& n_f, vector<string>& report, vector<int>& student_id, int k) {
+        
+        int n=student_id.size();
+        
+        vector<pair<int,int>>point;
+        
+        unordered_map<string,int>pf,nf;
+        
+        for(auto it:p_f){
+            pf[it]++;
+        }
+        
+        for(auto it:n_f){
+             nf[it]++;
+        }
+        
+        map<int,int>ans;
+        
+        for(int i=0;i<report.size();i++){
+            
+            string x=report[i];
+            x.push_back(' ');
+            
+            int pt=0;
+            string temp;
+            
+            for(int j=0;j<x.size();j++){
+                
+                if(x[j]==' '){
+                    
+                      if(pf.find(temp)!=pf.end())pt+=3;
+                    
+                      if(nf.find(temp)!=nf.end())pt-=1;
+                    
+                     temp.clear();
+                    
+                }else{
+                    temp.push_back(x[j]);
+                }       
+
+            }
+            
+            point.push_back({student_id[i],pt});
+        }
+        
+        // for(auto it:ans){
+        //     point.push_back({it.first,it.second});
+        // }
+        
+        sort(point.begin(),point.end(),cmp);
+        
+        vector<int>res(k);
+        
+        for(int i=0;i<k;i++){
+            res[i]=point[i].first;
+        }
+        
+        return res;
+        
+    }
+};
