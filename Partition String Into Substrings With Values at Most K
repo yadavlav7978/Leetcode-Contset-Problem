@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minimumPartition(string s, int k) {
+        
+        string temp;
+        temp+=s[0];
+        
+        int ct=1;
+        
+        for(int i=1;i<s.length();i++){
+            
+              temp+=s[i];
+            
+            if(s[i]-'0'>k) return -1;
+                
+              long long x=stoll(temp);
+                
+              if(x>(long long)k){
+                  ct++;
+                  temp=s[i];
+              }
+            
+        }
+        
+        return ct;
+        
+    }
+};
