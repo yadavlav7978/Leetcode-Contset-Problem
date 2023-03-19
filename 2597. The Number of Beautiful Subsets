@@ -1,0 +1,32 @@
+class Solution {
+public:
+
+int count(vector<int>&nums,int i,int k,map<int,int>&mp){
+      
+      if(i==nums.size()) return 0;
+
+      int key=nums[i]-k;
+      int ans1=0;
+
+      if(!mp[key]){
+          mp[nums[i]]++;
+          ans1=1+count(nums,i+1,k,mp);
+          mp[nums[i]]--;
+      }
+
+      int ans2=count(nums,i+1,k,mp);
+
+      return ans1+ans2;
+
+}
+
+    int beautifulSubsets(vector<int>& nums, int k) {
+
+        sort(nums.begin(),nums.end());
+
+        map<int,int>mp;
+
+        return count(nums,0,k,mp);
+        
+    }
+};
