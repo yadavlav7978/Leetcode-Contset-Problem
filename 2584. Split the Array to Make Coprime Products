@@ -1,0 +1,70 @@
+#define ll long long
+
+class Solution {
+public:
+    
+ vector<int>allprime(int n){
+        
+        vector<int>res;
+        
+        if(n%2==0){
+            res.push_back(2);
+        
+        while(n%2==0){
+            n=n/2;
+          }
+        }
+        for(int i=3;i<=sqrt(n);i=i+2){
+            
+            if(n%i==0){
+                
+                res.push_back(i);
+                
+              while(n%i==0){
+                  n=n/i;
+               }
+             }
+        }
+        
+        if(n>2){
+            res.push_back(n);
+        }
+        
+        return res;
+    }
+    
+    
+    int findValidSplit(vector<int>& nums) {
+        
+        int n=nums.size();
+        
+        map<int,vector<int>>mp;
+        
+        for(int i=0;i<n;i++){
+            mp[i]=allprime(nums[i]);
+        }
+        
+        map<int,int>last_index;
+        
+        for(auto [f,v]:mp){
+            
+            for(auto it:v){
+                last_index[it]=max(last_index[it],f);
+            }
+        }
+        
+        int i=0;
+        int largest=0;
+        
+        while(i<=largest){
+            
+            for(auto it:mp[i]){
+                largest=max(largest,last_index[it]);
+            }
+            if(largest==n-1) return -1;
+            i++;
+        }
+        
+        return largest;
+    }
+};
