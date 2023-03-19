@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int findSmallestInteger(vector<int>& nums, int value) {
+        
+        int n=nums.size();
+        
+        map<int,int>mp;
+        
+        for(int i=0;i<n;i++){
+            
+            int md=nums[i]%value;
+            
+            if(md<0){
+                md+=value;
+            }
+            
+            mp[md]++;
+            
+        }
+        
+        int ans=0;
+        
+        while(true){
+            
+            int md=ans%value;
+            
+            if(mp.find(md)!=mp.end()){
+                mp[md]--;
+                if(mp[md]==0){
+                    mp.erase(md);
+                }
+            }else{
+                break;
+            }
+            ans++;   
+        }
+        
+        return ans;
+        
+   
+        
+    }
+};
