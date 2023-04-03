@@ -1,0 +1,56 @@
+#define ll long long 
+
+class Solution {
+public:
+    long long makeSubKSumEqual(vector<int>& arr, int k) {
+        
+        int n=arr.size();
+        vector<bool>vis(n,0);
+        vector<vector<int>>v;
+
+        for(int i=0;i<n;i++){
+            
+            if(vis[i]==true) continue;
+
+             vector<int>temp;
+             int j=i;
+             while(vis[j]==false){
+                 temp.push_back(arr[j]);
+                 vis[j]=true;
+                 j=(j+k)%n;
+             }
+             v.push_back(temp);
+        }
+
+        ll ans=0;
+
+        for(int i=0;i<v.size();i++){
+
+            vector<int>temp=v[i];
+            sort(temp.begin(),temp.end());
+            int sz=temp.size();
+
+            int midl1;
+            int midl2=-1;
+
+            if(sz%2!=0){
+                midl1=temp[sz/2];
+            }else{
+                midl1=temp[(sz/2)-1];
+                midl2=temp[sz/2];
+            }
+              ll op1=0,op2=0;
+            for(int j=0;j<sz;j++){
+               op1+=(ll)abs(temp[j]-midl1);
+               if(midl2!=-1) op2+=(ll)abs(temp[j]-midl2);
+            }
+            if(midl2==-1){
+                ans+=op1;
+            }else{
+                ans+=min(op1,op2);
+            }
+        }
+
+        return ans;
+    }
+};
