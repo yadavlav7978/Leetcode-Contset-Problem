@@ -1,0 +1,52 @@
+#define ll long long
+
+class Solution {
+public:
+    vector<long long> distance(vector<int>& nums) {
+        
+        map<ll,vector<ll>>mp;
+        map<ll,ll>tempsum;
+        
+        for(ll i=0;i<nums.size();i++){
+            
+            mp[nums[i]].push_back(i);
+            
+            tempsum[nums[i]]+=i;
+        }
+        
+        int n=nums.size();
+        
+        
+        vector<ll>ans(n,0);
+        
+        for(auto [val,v]:mp){
+            
+                 ll sum=0;
+                 ll sz=v.size();
+            
+            if(sz==1){
+                ans[v[0]]=0;
+                continue;
+            }
+        
+         for(ll i=0;i<sz;i++){
+            
+             sum+=v[i];
+             
+            ll prev_ct=i;
+            ll back_ct=sz-(i+1);
+            
+            ll back_sum=tempsum[val]-sum;
+            ll prev_sum=sum-v[i];
+            
+            ll res=(back_sum-prev_sum)+(v[i]*(prev_ct-back_ct));
+             
+                ans[v[i]]=res;
+              
+            }
+        }
+
+        return ans;
+        
+    }
+};
