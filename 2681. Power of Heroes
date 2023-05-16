@@ -1,0 +1,29 @@
+#define ll long long 
+#define md 1000000007
+
+class Solution {
+public:
+    int sumOfPower(vector<int>& nums) {
+
+        sort(nums.begin(),nums.end());
+        
+        int n=nums.size();
+
+        ll prev_sum=0;
+        ll ans=((((ll)nums[0]*(ll)nums[0])%md)*(nums[0]%md))%md;
+
+        if(n==1) return ans;
+
+        for(int i=1;i<n;i++){
+
+        ll cur_sum=(((ll)nums[i]*(ll)nums[i])%md*(2*prev_sum+(ll)nums[i]+(ll)nums[i-1])%md)%md;
+
+        prev_sum=(2*prev_sum+nums[i-1])%md;
+        ans+=cur_sum;
+        ans%=md;
+        }
+
+        return ans;
+        
+    }
+};
