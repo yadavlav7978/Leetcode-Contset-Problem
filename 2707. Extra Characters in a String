@@ -1,0 +1,39 @@
+class Solution {
+public:
+
+int n;
+vector<int>dp;
+
+int fun(string &s,int i,map<string,int>&mp){
+
+    if(i>=n) return 0;
+    if(dp[i]!=-1) return dp[i];
+
+    int case1=0,case2=0;
+    string x="";
+   // pick this index i
+   // If u pick then generate all possible substring starting at this index
+
+    for(int j=i;j<n;j++){
+        x+=s[j];
+        if(mp[x]){
+            case1=max(case1,(int)x.length()+fun(s,j+1,mp));
+        }
+    }
+   // Not pick this index i
+    case2=fun(s,i+1,mp);
+
+    return dp[i]=max(case1,case2);
+}
+
+int minExtraChar(string s, vector<string>& dict) {
+        n=s.length();
+        map<string,int>mp;
+
+        for(auto it:dict){
+            mp[it]++;
+        }
+        dp.resize(n+1,-1);
+        return n-fun(s,0,mp);
+    }
+};
