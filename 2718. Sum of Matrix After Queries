@@ -1,0 +1,31 @@
+#define ll long long
+class Solution {
+public:
+    long long matrixSumQueries(int n, vector<vector<int>>& q) {
+          
+          ll row=n;
+          ll col=n;
+          ll ans=0;
+
+          vector<bool>visrow(n,0),viscol(n,0);
+
+        for(int i=q.size()-1;i>=0;i--){
+            ll type=q[i][0];
+            ll indx=q[i][1];
+            ll val=q[i][2];
+
+            if(type==0 and !visrow[indx]){
+                ans+=val*col;
+                row--;
+                visrow[indx]=1;
+            }
+            if(type==1 and !viscol[indx]){
+                ans+=val*row;
+                col--;
+                viscol[indx]=1;
+            }
+        }
+
+        return ans;
+    }
+};
