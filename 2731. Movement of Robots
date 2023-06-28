@@ -1,0 +1,41 @@
+#define ll long long
+#define md 1000000007
+
+class Solution {
+public:
+    int sumDistance(vector<int>& nums, string s, int d) {
+
+        int n=nums.size();
+
+        for(int i=0;i<nums.size();i++){
+             if(s[i]=='R'){
+                 nums[i]+=d;
+             }else{
+
+                 nums[i]-=d;
+             }
+        }
+
+        sort(nums.begin(),nums.end());
+
+        ll pref[n];
+        ll sum=0;
+
+        for(int i=n-1;i>=0;i--){
+               sum+=nums[i];
+               pref[i]=sum;
+        }
+
+        ll ans=0;
+
+        for(int i=0;i<nums.size()-1;i++){
+            ll ttl=n-i-1;
+            ll prf=pref[i+1];
+            ans+=(ttl*nums[i]-prf)%md;
+            ans%=md;
+        }
+
+        return abs(ans);
+        
+    }
+};
