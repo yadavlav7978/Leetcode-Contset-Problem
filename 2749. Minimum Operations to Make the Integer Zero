@@ -1,0 +1,20 @@
+#define ll long long 
+class Solution {
+public:
+    int makeTheIntegerZero(int num1, int num2) {
+        
+        for(ll op=1;op<65;op++){
+            
+            ll dif=(ll)num1-(op*(ll)num2);
+            
+            if(dif<0) return -1;
+            
+            int count_bit=__builtin_popcountll(dif);
+            
+            if(count_bit<=op and op<=dif) return op;
+        }
+        
+        return -1;
+        
+    }
+};
