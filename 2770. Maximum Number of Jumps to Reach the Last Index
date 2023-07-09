@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int n;
+    vector<int>dp;
+    
+    int call(int i,vector<int>&nums,int target){
+        
+        if(i==nums.size()-1) return 0;
+        if(dp[i]!=INT_MIN) return dp[i];
+        
+        int step=-1000;
+            
+        for(int j=i+1;j<nums.size();j++){
+            int val=nums[j]-nums[i];
+            
+            if(val>=-target and val<=target){
+                int res=1+call(j,nums,target);
+                step=max(step,res);
+            }
+        }
+        
+        return dp[i]=step;
+    }
+    
+    
+    int maximumJumps(vector<int>& nums, int target) {
+        
+        n=nums.size();
+        dp.resize(n,INT_MIN);
+        
+        int res=call(0,nums,target);
+        
+        if(res>0) return res;
+        
+        return -1;
+       
+            
+    }
+};
