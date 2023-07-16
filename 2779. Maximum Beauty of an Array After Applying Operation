@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maximumBeauty(vector<int>& nums, int k) {
+        
+        map<int,int>mp;
+        
+        for(auto it:nums){
+            mp[it-k]++;
+            mp[it+k+1]--;
+        }
+        
+        int ans=0;
+        int ct=0;
+        
+        for(auto it:mp){
+            ct+=it.second;
+            ans=max(ans,ct);
+        }
+        
+        return ans;
+    }
+};
