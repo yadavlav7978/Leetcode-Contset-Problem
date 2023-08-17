@@ -1,0 +1,40 @@
+class Solution {
+public:
+    
+    int dp[102][102];
+    
+    bool fun(vector<int>&sum,int i,int j,int m){
+        
+        if((j-i+1)<=2) return true;
+        if(dp[i][j]!=-1) return dp[i][j];
+        
+        bool case1=false;
+        bool case2=false;
+        
+        if((sum[j-1]-(i>0?sum[i-1]:0))>=m){
+            case1=fun(sum,i,j-1,m);
+        }
+         if((sum[j]-sum[i])>=m){
+            case2=fun(sum,i+1,j,m);
+        }
+        
+        return dp[i][j]=case1||case2;
+    }
+    
+    
+    bool canSplitArray(vector<int>& nums, int m) {
+        
+        int n=nums.size();
+        
+        vector<int>sum(n);
+        
+        int sm=0;
+        for(int i=0;i<n;i++){
+            sm+=nums[i];
+            sum[i]=sm;
+        }
+        memset(dp,-1,sizeof(dp));
+        
+        return fun(sum,0,n-1,m);
+    }
+};
