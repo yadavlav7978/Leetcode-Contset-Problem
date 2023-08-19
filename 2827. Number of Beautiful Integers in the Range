@@ -1,0 +1,51 @@
+class Solution {
+public:
+int dp[12][2][12][12][22][2];
+int mod;
+
+int fun(string& s,int i,bool tight,int even,int odd,int sum,bool zero){
+
+    if(i>=s.length()){
+        if( even==odd and sum%mod==0) return 1;
+        return 0;
+    }
+
+    if(dp[i][tight][even][odd][sum][zero]!=-1) return dp[i][tight][even][odd][sum][zero];
+
+       int end=tight?s[i]-'0':9;
+       int ans=0;
+
+
+    for(int k=0;k<=end;k++){
+
+        int new_even=even,new_odd=odd;
+
+       if((zero and k!=0) || !zero){
+           if(k%2==0) new_even++;
+           else new_odd++;
+       }
+    
+        int new_sum=(sum*10+k)%mod;
+        bool new_tight=(k==s[i]-'0')&&tight;
+
+        ans=ans+fun(s,i+1,new_tight,new_even,new_odd,new_sum,zero&&(k==0));
+    }
+
+    return dp[i][tight][even][odd][sum][zero]=ans;
+}
+
+
+    int numberOfBeautifulIntegers(int low, int high, int k) {
+       
+        mod=k;
+        memset(dp,-1,sizeof(dp));
+        string l=to_string(low-1);
+        int count1=fun(l,0,1,0,0,0,1);
+        memset(dp,-1,sizeof(dp));
+        string h=to_string(high);
+        int count2=fun(h,0,1,0,0,0,1);
+
+        return count2-count1;
+        
+    }
+};
