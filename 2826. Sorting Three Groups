@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int n;
+    
+    
+    int call(int i,int prev,vector<int>&nums,vector<vector<int>>&dp){
+        
+        if(i>=n) return 0;
+        if(dp[i][prev]!=-1) return dp[i][prev];
+        
+          int mn=INT_MAX;
+        
+        if(nums[i]>=prev) {
+            mn=call(i+1,nums[i],nums,dp);
+        }
+        
+        for(int j=prev;j<=3;j++){
+            int temp=1+call(i+1,j,nums,dp);
+            mn=min(mn,temp);   
+        }
+        
+        return dp[i][prev]=mn;
+    }
+    
+    
+    int minimumOperations(vector<int>& nums) {
+        
+        n=nums.size();
+        
+        int ans=INT_MAX;
+        
+        for(int i=1;i<=3;i++){
+            vector<vector<int>>dp(n,vector<int>(4,-1));
+            int res=(i==nums[0]?0:1)+call(1,i,nums,dp);
+            ans=min(ans,res);
+        }
+        
+        return ans;
+        
+    }
+};
