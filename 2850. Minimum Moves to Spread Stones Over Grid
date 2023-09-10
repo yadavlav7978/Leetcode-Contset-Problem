@@ -1,0 +1,59 @@
+class Solution {
+public:
+    
+    int fun( vector<vector<int>>&grid){
+        
+         int ans=100;
+         int ct=0;
+        
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                if(grid[i][j]==1) ct++;
+            }
+        }
+        
+        if(ct==9) return 0;
+        
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                
+                if(grid[i][j]==0){
+                    
+                    for(int ni=0;ni<3;ni++){
+                        for(int nj=0;nj<3;nj++){
+                            
+                            int cost=abs(i-ni)+abs(j-nj);
+                            
+                            if(grid[ni][nj]>1){
+                                
+                                grid[ni][nj]--;
+                                grid[i][j]++;
+                                
+                                
+                                int temp=cost+fun(grid);
+                                
+                                ans=min(ans,temp);
+                                
+                                grid[ni][nj]++;
+                                grid[i][j]--;
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return ans;
+    }
+    
+    
+    int minimumMoves(vector<vector<int>>& grid) {
+        
+        int n=grid.size();
+        
+        
+        return fun(grid);
+        
+    }
+};
