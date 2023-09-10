@@ -1,0 +1,19 @@
+#define ll long long 
+class Solution {
+public:
+    bool isReachableAtTime(int sx, int sy, int fx, int fy, int t) {
+
+        if(sx==fx and sy==fy and t==1) return false;
+   
+        int xdif=abs(fx-sx);
+        int ydif=abs(fy-sy);
+        
+        int mn=min(xdif,ydif);
+        int time=mn+abs(xdif-ydif);
+        
+        if(time<=t) return true;
+        
+        return false;
+        
+    }
+};
